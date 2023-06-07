@@ -1,0 +1,12 @@
+.input__control {
+  width: 100%;
+  display: grid;
+  gap: 0.5rem;
+}
+.input__control > label {
+  font-weight: 600;
+}
+.input__control > input {
+  width: 100%;
+  font-size: 1.1rem;
+}

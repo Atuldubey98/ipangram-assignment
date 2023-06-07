@@ -1,0 +1,14 @@
+.register__wrapper {
+  max-width: 720px;
+  margin: auto;
+  padding: 1rem;
+  background-color: var(--primary-color);
+}
+
+.register__wrapper > h1 {
+  font-size: 3rem;
+}
+.register__wrapper > form {
+  display: grid;
+  gap: 0.8rem;
+}

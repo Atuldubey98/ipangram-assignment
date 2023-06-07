@@ -1,0 +1,15 @@
+.profile__field {
+  display: flex;
+  gap: 1rem;
+}
+.profile__field > .profile__head {
+  font-weight: bold;
+}
+.profile__field > .profile__value {
+  text-transform: capitalize;
+}
+.profile__info {
+  display: grid;
+  gap: 0.8rem;
+}
+

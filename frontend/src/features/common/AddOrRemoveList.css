@@ -1,0 +1,27 @@
+.addorremove__list > input {
+  border: none;
+  outline: none;
+  background-color: var(--primary-color);
+}
+.addorremove__list {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  padding: 0.8rem;
+}
+.add__list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.add__list > li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.3rem;
+  border: 1px solid var(--border-color);
+}

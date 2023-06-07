@@ -1,0 +1,10 @@
+.login__wrapper {
+  max-width: 720px;
+  margin: auto;
+  padding: 1rem;
+  background-color: var(--primary-color);
+}
+.login__wrapper > form {
+  display: grid;
+  gap: 0.8rem;
+}
