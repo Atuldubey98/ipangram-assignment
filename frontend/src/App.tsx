@@ -4,7 +4,7 @@ import RegisterPage from "./features/register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoginPage from "./features/login";
-import ProfilePage from "./features/profile";
+import ProfilePage from "./features/employee";
 import PrivateRoute from "./features/common/PrivateRoute";
 import NotAuthorized from "./features/common/NotAuthorized";
 import EmployeesPage from "./features/employees";

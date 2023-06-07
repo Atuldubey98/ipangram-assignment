@@ -1,9 +1,9 @@
-import "./ProfileField.css";
-export interface ProfileFieldProps {
+import "./EmployeeField.css";
+export interface EmployeeFieldProps {
   heading: string;
   value: string;
 }
-export default function ProfileField(props: ProfileFieldProps) {
+export default function EmployeeField(props: EmployeeFieldProps) {
   const { heading, value } = props;
   return value ? (
     <div className="profile__field">

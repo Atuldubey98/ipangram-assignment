@@ -1,7 +1,7 @@
-import IProfile from "../profile/IProfile";
+import IEmployee from "../employee/IEmployee";
 import IUser from "./IUser";
 
 export default interface IRegisterUser {
   user: IUser;
-  profile: IProfile;
+  employee: IEmployee;
 }

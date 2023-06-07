@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import Profile from "../models/profile/Profile";
+import Employee from "../models/employee/Employee";
 
-export default class ProfileController {
+export default class EmployeeController {
   /**
-   * getAllProfiles
+   * getProfilesOfEmployees
    */
   public static async getProfilesOfEmployees(
     req: Request,
@@ -31,8 +31,11 @@ export default class ProfileController {
           select: "email _id",
         },
       };
-      const paginatedProfile = await Profile.paginate({ ...filter }, options);
-      return res.status(200).send(paginatedProfile);
+      const paginatedEmployees = await Employee.paginate(
+        { ...filter },
+        options
+      );
+      return res.status(200).send(paginatedEmployees);
     } catch (error) {
       next(error);
     }
@@ -44,8 +47,8 @@ export default class ProfileController {
   ) {
     try {
       const userId = req.session.user ? req.session.user._id : "";
-      const profile = await Profile.findOne({ userId });
-      return res.status(200).send(profile);
+      const employee = await Employee.findOne({ userId });
+      return res.status(200).send(employee);
     } catch (error) {
       next(error);
     }

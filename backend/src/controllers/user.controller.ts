@@ -1,7 +1,7 @@
 import * as bcryptjs from "bcryptjs";
 import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
-import Profile from "../models/profile/Profile";
+import Employee from "../models/employee/Employee";
 import IRegisterUser from "../models/user/IRegisterUser";
 import User from "../models/user/User";
 declare module "express-session" {
@@ -19,7 +19,7 @@ export default class UserController {
     next: NextFunction
   ) {
     try {
-      const { user, profile }: IRegisterUser = req.body;
+      const { user, employee }: IRegisterUser = req.body;
       if (!user) {
         throw createHttpError(400, "USER_PAYLOAD_ERROR");
       }
@@ -34,8 +34,8 @@ export default class UserController {
       );
       const newUser = new User({ email, password: passwordHash });
       await newUser.save();
-      const newProfile = new Profile({ userId: newUser.id, ...profile });
-      await newProfile.save();
+      const newEmployee = new Employee({ userId: newUser.id, ...employee });
+      await newEmployee.save();
       return res.status(201).send("USER_REGISTRATION_SUCCESS");
     } catch (error) {
       next(error);

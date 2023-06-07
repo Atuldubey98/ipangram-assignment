@@ -1,12 +1,12 @@
+import MongoStore from "connect-mongo";
+import cors from "cors";
 import express, { Application, NextFunction, Request, Response } from "express";
+import session, { SessionOptions } from "express-session";
 import createHttpError, { isHttpError } from "http-errors";
 import mongoose from "mongoose";
 import { CLIENT_URL, MONGO_URI, NODE_ENV, SESSION_SECRET } from "./config";
+import employeeRouter from "./routes/employee.routes";
 import userRouter from "./routes/user.routes";
-import MongoStore from "connect-mongo";
-import session, { SessionOptions } from "express-session";
-import cors from "cors";
-import profileRouter from "./routes/profile.routes";
 
 const app: Application = express();
 mongoose.connect(MONGO_URI);
@@ -39,7 +39,7 @@ if (NODE_ENV === "production") {
 app.use(session(sessionOptions));
 
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/profiles", profileRouter);
+app.use("/api/v1/employees", employeeRouter);
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(createHttpError(404, "NOT_FOUND"));
 });

@@ -41,8 +41,8 @@ export const regiserValidation = [
     minUppercase: 1,
     minNumbers: 1,
   }),
-  body("profile.firstName").isString(),
-  body("profile.gender").isIn(allowedGenders),
+  body("employee.firstName").isString(),
+  body("employee.gender").isIn(allowedGenders),
 ];
 export const loginValidation = [
   body("email").isEmail(),

@@ -1,12 +1,12 @@
 import mongoose, { Document, Schema, model } from "mongoose";
-import IProfile from "./IProfile";
+import IEmployee from "./IEmployee";
 import {
   allowedCategoryNames,
   allowedDepartmentNames,
   allowedGenders,
 } from "../../utils/validation";
 import paginate from "mongoose-paginate-v2";
-const profileSchema = new Schema(
+const employeeSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -54,13 +54,13 @@ const profileSchema = new Schema(
     timestamps: true,
   }
 );
-profileSchema.plugin(paginate);
-profileSchema.virtual("name").get(function () {
+employeeSchema.plugin(paginate);
+employeeSchema.virtual("name").get(function () {
   return [this.firstName, this.lastName].filter(Boolean).join(" ");
 });
-interface ProfileDocument extends Document, IProfile {}
-const Profile = model<ProfileDocument, mongoose.PaginateModel<IProfile>>(
-  "profile",
-  profileSchema
+interface employeeDocument extends Document, IEmployee {}
+const Employee = model<employeeDocument, mongoose.PaginateModel<IEmployee>>(
+  "employee",
+  employeeSchema
 );
-export default Profile;
+export default Employee;
