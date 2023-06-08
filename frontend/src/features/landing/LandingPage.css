@@ -1,0 +1,26 @@
+.landing__page {
+  animation: dropFromAbove 300ms ease-in forwards;
+}
+.landing__page > h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+@keyframes dropFromAbove {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.landing__page > p {
+  font-size: 2rem;
+  text-align: center;
+}
+.landing__page {
+  min-height: 80svh;
+  flex-direction: column;
+}
+.btns {
+  gap: 0.8rem;
+}

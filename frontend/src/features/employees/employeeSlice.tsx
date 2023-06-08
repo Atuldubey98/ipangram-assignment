@@ -70,11 +70,15 @@ const employeeSlice = createSlice({
     setCompanyDetailsofEmployeesLoading: (state) => {
       state.updateEmployeeCompanyDetailsLoading = "loading";
     },
+    setCompanyEmployeeStateDefault: (state) => {
+      state = { ...initialState };
+    },
   },
 });
 export const {
   setEmployeesLoading,
   setEmployeesSucces,
+  setCompanyEmployeeStateDefault,
   setUpdateEmployeById,
   setAllEmployeesForUpdate,
   setUpdateEmployeeDetailError,

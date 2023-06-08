@@ -9,7 +9,7 @@ export default function LoginPage() {
   const { loginUser, onLoginFormFieldChange, onSubmitLoginForm, loading } =
     useLoginPage();
   return (
-    <main>
+    <main className="login__page d-flex-center">
       <div className="login__wrapper">
         <h1>Login Page</h1>
         <Link to={"/register"}>Click here to register</Link>

@@ -23,11 +23,15 @@ const employeeSlice = createSlice({
     setEmployeeLoadingError: (state) => {
       state.employeeStatus = "failure";
     },
+    setEmployeeStateDefault: (state) => {
+      state = { ...initialState };
+    },
   },
   initialState,
 });
 export const {
   setEmployeeLoading,
+  setEmployeeStateDefault,
   setEmployeeSuccess,
   setEmployeeLoadingError,
 } = employeeSlice.actions;

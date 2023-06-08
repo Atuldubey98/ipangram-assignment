@@ -8,11 +8,13 @@ import ProfilePage from "./features/employee";
 import PrivateRoute from "./features/common/PrivateRoute";
 import NotAuthorized from "./features/common/NotAuthorized";
 import EmployeesPage from "./features/employees";
+import LandingPage from "./features/landing";
 
 export default function App() {
   return (
     <>
       <Routes>
+        <Route element={<LandingPage />} path="/" />
         <Route element={<RegisterPage />} path="/register" />
         <Route element={<LoginPage />} path="/login" />
         <Route
