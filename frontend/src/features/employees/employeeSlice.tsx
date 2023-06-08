@@ -7,6 +7,7 @@ import {
   updateEmployeeData,
 } from "./employeeAPI";
 import { EmpQuery, Employee, EmployeesResponse } from "./interfaces";
+import { MessageType } from "../common/useUserToast";
 type EmployeesState = {
   employeesLoadingStatus: "loading" | "idle" | "success" | "failure";
   employeesResponse: EmployeesResponse | null;
@@ -71,7 +72,9 @@ const employeeSlice = createSlice({
       state.updateEmployeeCompanyDetailsLoading = "loading";
     },
     setCompanyEmployeeStateDefault: (state) => {
-      state = { ...initialState };
+      state.employeesLoadingStatus = "idle";
+      state.employeesResponse = null;
+      state.updateEmployeesIds = [];
     },
   },
 });
@@ -102,17 +105,19 @@ export const updateEmployeeDataAction =
   (
     query: EmployeeCompanyDetails,
     employeeId: string,
-    onCloseEmployeeModal: VoidFunction
+    onCloseEmployeeModal: VoidFunction,
+    showToast: (props: MessageType) => void
   ): AppThunk =>
   async (dispatch) => {
     try {
       dispatch(setUpdateEmployeeDetailLoading());
       const { data } = await updateEmployeeData(query, employeeId);
       dispatch(setUpdateEmployeById(data));
-
+      showToast({ type: "success", message: "User record updated" });
       onCloseEmployeeModal();
     } catch (error) {
       dispatch(setUpdateEmployeeDetailError());
+      showToast({ type: "success", message: "Some error has occured" });
     }
   };
 

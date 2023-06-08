@@ -6,8 +6,11 @@ export const getEmployeeQuery = (req: Request) => {
   Object.entries(queryFilter).forEach(([key, value]) => {
     const field: string = typeof key === "string" ? key : "";
     const query: string = typeof value === "string" ? value : "";
+
     if (field && query) {
-      filter[field] = { $regex: query, $options: "i" };
+      filter[field] = {
+        $regex: new RegExp(`^${query}`, "i"),
+      };
     }
   });
   const page =

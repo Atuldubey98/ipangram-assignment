@@ -1,6 +1,7 @@
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import Modal from "react-modal";
 import { useAppDispatch } from "../../app/hooks";
+import useUserToast from "../common/useUserToast";
 import EmployeeDetailsForm from "./EmployeeDetailsForm";
 import "./EmployeeDetailsUpdateModal.css";
 import { updateEmployeeDataAction } from "./employeeSlice";
@@ -44,10 +45,17 @@ export default function EmployeeDetailsUpdateModal(
       categoryName,
       location,
     });
- 
+  const { showToast } = useUserToast();
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    appDispatch(updateEmployeeDataAction(empDetails, employee._id, onCloseEmployeeModal));
+    appDispatch(
+      updateEmployeeDataAction(
+        empDetails,
+        employee._id,
+        onCloseEmployeeModal,
+        showToast
+      )
+    );
   };
   return (
     <Modal

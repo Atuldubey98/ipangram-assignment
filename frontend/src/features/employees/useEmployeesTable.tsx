@@ -23,6 +23,7 @@ export default function useEmployeesTable() {
   const onLimitChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     setQuery({
       ...query,
+      page: 1,
       limit: Number(e.target.value),
     });
     appDispatch(setRemoveAllEmployeesForUpdate());

@@ -92,7 +92,7 @@ export default class EmployeeController {
   ) {
     try {
       const { sort, page, limit, filter } = getEmployeeQuery(req);
-
+      
       const options: PaginateOptions = {
         limit,
         page,
