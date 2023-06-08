@@ -3,6 +3,7 @@ th {
 }
 tr {
   border: 1px solid lightgray;
+  text-transform: capitalize;
 }
 thead {
   background-color: lightgreen;
@@ -11,7 +12,16 @@ td {
   border: 1px solid lightgray;
 }
 table {
+  animation: scaleAnimation 300ms ease-in forwards;
   padding: 0.5rem;
+}
+@keyframes scaleAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .employees__notFound {
   min-height: 60svh;

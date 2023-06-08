@@ -9,7 +9,11 @@ export default function useEmployeeDetailsForm(
   const onChangeDetails: ChangeEventHandler<
     HTMLSelectElement | HTMLInputElement
   > = (e) => {
+    console.log(e.target.value);
+
     setEmpDetails({ ...empDetails, [e.target.name]: e.target.value });
+    console.log(e.target.name);
+    
   };
   const onChangeSalary: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (isNaN(Number(e.target.value))) {

@@ -16,25 +16,34 @@ type EmployeesState = {
     | "idle"
     | "success"
     | "failure";
+  udpateEmployeeDetailsStatus: "loading" | "idle" | "success" | "failure";
 };
 const initialState: EmployeesState = {
   employeesLoadingStatus: "idle",
   employeesResponse: null,
   updateEmployeesIds: [],
+  udpateEmployeeDetailsStatus: "idle",
   updateEmployeeCompanyDetailsLoading: "idle",
 };
 const employeeSlice = createSlice({
   initialState,
   name: "employees",
   reducers: {
+    setUpdateEmployeeDetailLoading: (state) => {
+      state.udpateEmployeeDetailsStatus = "loading";
+    },
+    setUpdateEmployeeDetailError: (state) => {
+      state.udpateEmployeeDetailsStatus = "failure";
+    },
     setEmployeesLoading: (state) => {
       state.employeesLoadingStatus = "loading";
+      console.log("Loading");
     },
     setEmployeesSucces: (state, action: PayloadAction<EmployeesResponse>) => {
       state.employeesResponse = action.payload;
+      state.employeesLoadingStatus = "success";
     },
     setAddToUpdateEmployees: (state, action: PayloadAction<string>) => {
-
       state.updateEmployeesIds = [action.payload, ...state.updateEmployeesIds];
     },
     setRemoveFromUpdateEmployees: (state, action: PayloadAction<string>) => {
@@ -55,6 +64,7 @@ const employeeSlice = createSlice({
               doc._id === action.payload._id ? action.payload : doc
             )
           : null;
+        state.udpateEmployeeDetailsStatus = "success";
       }
     },
     setCompanyDetailsofEmployeesLoading: (state) => {
@@ -67,6 +77,8 @@ export const {
   setEmployeesSucces,
   setUpdateEmployeById,
   setAllEmployeesForUpdate,
+  setUpdateEmployeeDetailError,
+  setUpdateEmployeeDetailLoading,
   setAddToUpdateEmployees,
   setCompanyDetailsofEmployeesLoading,
   setRemoveFromUpdateEmployees,
@@ -77,18 +89,27 @@ export const loadEmployeesTableAction =
   (query: EmpQuery): AppThunk =>
   async (dispatch) => {
     try {
-      setEmployeesLoading();
+      dispatch(setEmployeesLoading());
       const { data } = await loadEmployeesData(query);
       dispatch(setEmployeesSucces(data));
     } catch (error) {}
   };
 export const updateEmployeeDataAction =
-  (query: EmployeeCompanyDetails, employeeId: string): AppThunk =>
+  (
+    query: EmployeeCompanyDetails,
+    employeeId: string,
+    onCloseEmployeeModal: VoidFunction
+  ): AppThunk =>
   async (dispatch) => {
     try {
+      dispatch(setUpdateEmployeeDetailLoading());
       const { data } = await updateEmployeeData(query, employeeId);
       dispatch(setUpdateEmployeById(data));
-    } catch (error) {}
+
+      onCloseEmployeeModal();
+    } catch (error) {
+      dispatch(setUpdateEmployeeDetailError());
+    }
   };
 
 export const updateEmployeeCompanyDetailsAction =

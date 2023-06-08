@@ -8,10 +8,9 @@ import { EmpQuery, EmployeeQuery } from "./interfaces";
 
 export default function useEmployeesTable() {
   const appDispatch = useAppDispatch();
-  const { employeesResponse, updateEmployeesIds } = useAppSelector(
-    (state) => state.employees
-  );
-
+  const { employeesResponse, updateEmployeesIds, employeesLoadingStatus } =
+    useAppSelector((state) => state.employees);
+  const loading = employeesLoadingStatus === "loading";
   const [query, setQuery] = useState<EmpQuery>({
     filter: {},
     sort: {},
@@ -112,6 +111,7 @@ export default function useEmployeesTable() {
     employeesResponse,
     onLimitChange,
     updateEmployeesIds,
+    loading,
     onChangeSort,
     generateFilters,
     onPageChange,

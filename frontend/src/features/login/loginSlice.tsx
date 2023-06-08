@@ -58,6 +58,7 @@ export const loginUserAction =
           isAxiosError(error) ? error.response?.data.message : "ERROR_OCCURED"
         ),
       });
+      dispatch(setFailed());
     }
   };
 export const loadUserAction = (): AppThunk => async (dispatch) => {

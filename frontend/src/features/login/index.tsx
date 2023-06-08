@@ -4,8 +4,9 @@ import Input from "../common/Input";
 import Button from "../common/Button";
 import "./LoginPage.css";
 import useLoginPage from "./useLoginPage";
+import { BarLoader } from "react-spinners";
 export default function LoginPage() {
-  const { loginUser, onLoginFormFieldChange, onSubmitLoginForm } =
+  const { loginUser, onLoginFormFieldChange, onSubmitLoginForm, loading } =
     useLoginPage();
   return (
     <main>
@@ -19,11 +20,13 @@ export default function LoginPage() {
             type="email"
             value={loginUser.email}
             name="email"
+            disabled={loading}
             required
           />
           <Input
             onChange={onLoginFormFieldChange}
             label="Password"
+            disabled={loading}
             type="password"
             value={loginUser.password}
             required={true}
@@ -31,7 +34,13 @@ export default function LoginPage() {
             maxLength={20}
             name="password"
           />
-          <Button label="Login" type="submit" />
+          {loading ? (
+            <div className="d-flex-center">
+              <BarLoader />
+            </div>
+          ) : (
+            <Button label="Login" type="submit" />
+          )}
         </form>
       </div>
     </main>

@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import useUserToast from "../common/useUserToast";
 import { registerUserAction } from "./registerSlice";
 export type RegisterUserType = {
@@ -19,6 +19,8 @@ export default function useRegisterPage() {
   const [hobby, setHobby] = useState<{ _id: string; value: string }>(
     defaultHobby
   );
+  const { registerStatus } = useAppSelector((state) => state.register);
+  const loading = registerStatus === "loading";
   const onChangeHobby: ChangeEventHandler<HTMLInputElement> = (e) => {
     setHobby({
       ...hobby,
@@ -47,14 +49,16 @@ export default function useRegisterPage() {
     firstNameErrTxt: string;
     hasErrors: boolean;
   };
-  const [registerUser, setRegisterUser] = useState<RegisterUserType>({
+  const defaultRegisterUser = {
     email: "",
     hobbies: [],
     password: "",
     firstName: "",
     lastName: "",
     gender: "male",
-  });
+  };
+  const [registerUser, setRegisterUser] =
+    useState<RegisterUserType>(defaultRegisterUser);
   const [registerFormErrors, setRegisterFormErrors] =
     useState<RegisterUserErrors>({
       emailErrTxt: "",
@@ -69,7 +73,7 @@ export default function useRegisterPage() {
     if (registerFormErrors.hasErrors) {
       return;
     }
-    appDispatch(registerUserAction(registerUser, showToast));
+    appDispatch(registerUserAction(registerUser, showToast, clearFields));
   };
   function addHobbyToRegisteredUser() {
     if (hobby.value.length === 0) {
@@ -119,7 +123,9 @@ export default function useRegisterPage() {
       firstNameErrTxt,
     });
   };
-
+  function clearFields() {
+    setRegisterUser(defaultRegisterUser);
+  }
   return {
     genderOptions,
     onRegisterFieldChange,
@@ -130,5 +136,6 @@ export default function useRegisterPage() {
     onChangeHobby,
     onRemoveHobby,
     hobby,
+    loading,
   };
 }

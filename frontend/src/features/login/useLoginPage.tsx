@@ -1,5 +1,5 @@
 import { ChangeEventHandler, useState } from "react";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
 import useUserToast from "../common/useUserToast";
 import { loginUserAction } from "./loginSlice";
@@ -13,6 +13,7 @@ export default function useLoginPage() {
     email: "",
     password: "",
   });
+  const { status } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   const onLoginFormFieldChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -23,7 +24,7 @@ export default function useLoginPage() {
     });
   };
   const { showToast } = useUserToast();
-
+  const loading = status === "loading";
   function navigateToProfile() {
     navigate("/profile");
   }
@@ -38,5 +39,6 @@ export default function useLoginPage() {
     loginUser,
     onLoginFormFieldChange,
     onSubmitLoginForm,
+    loading,
   };
 }

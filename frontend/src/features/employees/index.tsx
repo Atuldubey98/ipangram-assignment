@@ -15,6 +15,7 @@ import EmployeeTable from "./EmployeeTable";
 import "./EmployeesPage.css";
 import useEmployeesTable from "./useEmployeesTable";
 import EmployeeCompanyDetails from "./EmployeeCompanyDetails";
+import { BarLoader } from "react-spinners";
 export default function EmployeesPage() {
   const {
     employeesResponse,
@@ -22,6 +23,7 @@ export default function EmployeesPage() {
     onChangeFilter,
     onChangeSort,
     onLimitChange,
+    loading,
     generateFilters,
     onPageChange,
     updateEmployeesIds,
@@ -51,6 +53,8 @@ export default function EmployeesPage() {
   const onCloseEmployeeCompanyDetailsModal = () => {
     appDispatch(setEmpCompanyDetailsModalClose());
   };
+  console.log(loading);
+  
   return (
     <ManagerContainer>
       <main>
@@ -62,13 +66,19 @@ export default function EmployeesPage() {
           generateFilters={generateFilters}
         />
         <section className="emp__tableWrapper">
-          <EmployeeTable
-            totalEmployeesForUpdate={updateEmployeesIds.length || 0}
-            onChangeSort={onChangeSort}
-            employees={employees}
-            onChangeFilter={onChangeFilter}
-            employeesQuery={employeesQuery}
-          />
+          {loading ? (
+            <div className="d-flex-center">
+              <BarLoader />
+            </div>
+          ) : (
+            <EmployeeTable
+              totalEmployeesForUpdate={updateEmployeesIds.length || 0}
+              onChangeSort={onChangeSort}
+              employees={employees}
+              onChangeFilter={onChangeFilter}
+              employeesQuery={employeesQuery}
+            />
+          )}
         </section>
         <div className="emp__tableFooter">
           {employeesResponse?.hasPrevPage ? (

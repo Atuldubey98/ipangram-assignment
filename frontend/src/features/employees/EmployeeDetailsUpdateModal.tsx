@@ -16,6 +16,7 @@ export type EmployeeCompanyDetails = {
   departmentName: string;
   categoryName: string;
   location: string;
+  role?: string;
 };
 export default function EmployeeDetailsUpdateModal(
   props: EmployeeDetailsUpdateModal
@@ -33,18 +34,20 @@ export default function EmployeeDetailsUpdateModal(
       transform: "translate(-50%, -50%)",
     },
   };
-  const { salary, departmentName, categoryName, location } = employee;
+  const { salary, departmentName, categoryName, location, user } = employee;
   const appDispatch = useAppDispatch();
   const { empDetails, onChangeDetails, onChangeSalary } =
     useEmployeeDetailsForm({
       salary,
+      role: user.role,
       departmentName,
       categoryName,
       location,
     });
+ 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    appDispatch(updateEmployeeDataAction(empDetails, employee._id));
+    appDispatch(updateEmployeeDataAction(empDetails, employee._id, onCloseEmployeeModal));
   };
   return (
     <Modal
@@ -63,6 +66,9 @@ export default function EmployeeDetailsUpdateModal(
           onClick={onCloseEmployeeModal}
         />
       </div>
+      <span>
+        {employee.user.email} {`(${employee.user.role.toLocaleUpperCase()})`}
+      </span>
       <EmployeeDetailsForm
         onSubmit={onSubmit}
         empDetails={empDetails}

@@ -22,11 +22,13 @@
   align-items: center;
   justify-content: center;
   margin: auto;
+  gap: 0.8rem;
   padding-block: 0.5rem;
   max-width: 250px;
 }
 .emp__stats {
   text-align: center;
+  font-weight: 600;
 }
 .emp__operations > h3 {
   text-align: center;

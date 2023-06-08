@@ -4,6 +4,9 @@ import Input from "../common/Input";
 import SelectCategory from "./SelectCategory";
 import SelectDepartment from "./SelectDepartment";
 import { EmployeeCompanyDetails } from "./EmployeeDetailsUpdateModal";
+import SelectOptions from "../common/SelectOptions";
+import { useAppSelector } from "../../app/hooks";
+import { BarLoader } from "react-spinners";
 export type EmployeeDetailsFormProps = {
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   onChangeDetails: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
@@ -12,6 +15,10 @@ export type EmployeeDetailsFormProps = {
 };
 export default function EmployeeDetailsForm(props: EmployeeDetailsFormProps) {
   const { onChangeDetails, onSubmit, empDetails, onChangeSalary } = props;
+  const { udpateEmployeeDetailsStatus } = useAppSelector(
+    (state) => state.employees
+  );
+  const loading = udpateEmployeeDetailsStatus === "loading";
   return (
     <form className="emp__detailsForm" onSubmit={onSubmit}>
       <SelectDepartment
@@ -24,6 +31,18 @@ export default function EmployeeDetailsForm(props: EmployeeDetailsFormProps) {
         onChange={onChangeDetails}
         value={empDetails.categoryName}
       />
+      {empDetails.role ? (
+        <SelectOptions
+          label="Role"
+          options={[
+            { value: "manager", label: "Manager" },
+            { value: "employee", label: "Employee" },
+          ]}
+          onChange={onChangeDetails}
+          name="role"
+          value={empDetails.role}
+        />
+      ) : null}
       <Input
         name="location"
         type="text"
@@ -39,7 +58,7 @@ export default function EmployeeDetailsForm(props: EmployeeDetailsFormProps) {
         value={empDetails.salary}
       />
       <div className="emp__detailsFormBtn">
-        <Button label="Submit" type="submit" />
+        {loading ? <BarLoader /> : <Button label="Submit" type="submit" />}
       </div>
     </form>
   );

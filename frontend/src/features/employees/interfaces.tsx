@@ -27,6 +27,7 @@ export interface Employee {
 export interface EmployeeUser {
   _id: string;
   email: string;
+  role: "manager" | "employee";
 }
 export interface EmployeeFilter {
   departmentName: string;
@@ -35,7 +36,6 @@ export interface EmployeeFilter {
   firstName: string;
   lastName: string;
   gender: string;
-  
 }
 export interface EmployeeSort {
   salary: "asc" | "desc" | "";

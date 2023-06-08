@@ -50,7 +50,8 @@ export default registeSlice.reducer;
 export const registerUserAction =
   (
     registerUser: RegisterUserType,
-    showToast: (messageType: MessageType) => void
+    showToast: (messageType: MessageType) => void,
+    clearFields: VoidFunction
   ): AppThunk =>
   async (dispatch) => {
     try {
@@ -58,8 +59,9 @@ export const registerUserAction =
       const response = await registerUserAPI(registerUser);
       dispatch(setRegisterSuccess(getFromAPICodes(response.data)));
       showToast({ type: "success", message: getFromAPICodes(response.data) });
+      clearFields();
     } catch (error) {
-      setRegisterFailure();
+      dispatch(setRegisterFailure());
       showToast({
         type: "error",
         message: getFromAPICodes(

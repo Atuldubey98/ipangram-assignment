@@ -7,6 +7,7 @@ import SelectOptions from "../common/SelectOptions";
 import useFocusOnTextField from "../common/useFocusOnTextField";
 import "./RegisterPage.css";
 import useRegisterPage from "./useRegisterPage";
+import { BarLoader } from "react-spinners";
 
 export default function RegisterPage() {
   const { fieldRef } = useFocusOnTextField();
@@ -20,7 +21,10 @@ export default function RegisterPage() {
     onRemoveHobby,
     onChangeHobby,
     hobby,
+    loading,
   } = useRegisterPage();
+  console.log(loading);
+  
   return (
     <main className="register__page">
       <div className="register__wrapper">
@@ -32,6 +36,7 @@ export default function RegisterPage() {
             label="Email"
             type="email"
             name="email"
+            disabled={loading}
             required
             value={registerUser.email}
             ref={fieldRef}
@@ -41,6 +46,7 @@ export default function RegisterPage() {
           ) : null}
           <Input
             required={true}
+            disabled={loading}
             label="Password"
             value={registerUser.password}
             onChange={onRegisterFieldChange}
@@ -56,6 +62,7 @@ export default function RegisterPage() {
             label="First Name"
             type="text"
             required={true}
+            disabled={loading}
             value={registerUser.firstName}
             name="firstName"
             onChange={onRegisterFieldChange}
@@ -66,6 +73,7 @@ export default function RegisterPage() {
           <Input
             label="Last Name"
             type="text"
+            disabled={loading}
             name="lastName"
             value={registerUser.lastName}
             onChange={onRegisterFieldChange}
@@ -87,7 +95,13 @@ export default function RegisterPage() {
               onChange: onChangeHobby,
             }}
           />
-          <Button label="Register" type="submit" />
+          {loading ? (
+            <div className="d-flex-center">
+              <BarLoader />
+            </div>
+          ) : (
+            <Button label="Register" type="submit" />
+          )}
         </form>
       </div>
     </main>

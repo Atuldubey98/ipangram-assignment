@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import Employee from "../models/employee/Employee";
-import { getEmployeeQuery } from "../utils/employeesUtil";
-import { PaginateOptions } from "mongoose";
 import createHttpError from "http-errors";
+import { PaginateOptions } from "mongoose";
+import Employee from "../models/employee/Employee";
+import User from "../models/user/User";
+import { getEmployeeQuery } from "../utils/employeesUtil";
 
 export default class EmployeeController {
   /**
@@ -17,15 +18,31 @@ export default class EmployeeController {
     try {
       const employeeId: string =
         typeof req.params.employeeId == "string" ? req.params.employeeId : "";
+      const { role: roleBody, ...restDetail } = req.body;
+      const role =
+        ["manager", "employee"].indexOf(roleBody) !== -1
+          ? roleBody
+          : "employee";
       const updatedEmployee = await Employee.findByIdAndUpdate(
         employeeId,
-        { ...req.body },
+        { ...restDetail },
         { new: true }
       );
       if (!updatedEmployee) {
         throw createHttpError(400, "EMPLOYEE_NOT_FOUND");
       }
-      return res.status(201).send(updatedEmployee);
+      await User.updateOne(
+        { _id: updatedEmployee.user },
+        {
+          role,
+        },
+        { new: true }
+      ).select("_id email role");
+      const employee = await Employee.findById(employeeId).populate(
+        "user",
+        "email _id role"
+      );
+      return res.status(201).send(employee);
     } catch (error) {
       next(error);
     }
@@ -82,7 +99,7 @@ export default class EmployeeController {
         sort,
         populate: {
           path: "user",
-          select: "email _id",
+          select: "email _id role",
         },
       };
       const paginatedEmployees = await Employee.paginate(
