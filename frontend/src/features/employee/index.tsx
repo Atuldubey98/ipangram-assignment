@@ -51,10 +51,7 @@ export default function ProfilePage() {
                   heading="Salary"
                   value={employee?.salary.toFixed(2)}
                 />
-                <ProfileField
-                  heading="Salary"
-                  value={employee?.salary.toFixed(2)}
-                />
+
                 <ProfileField
                   heading="Joined Company"
                   value={`${moment(

@@ -34,7 +34,7 @@ export default class UserController {
       );
       const newUser = new User({ email, password: passwordHash });
       await newUser.save();
-      const newEmployee = new Employee({ userId: newUser.id, ...employee });
+      const newEmployee = new Employee({ user: newUser.id, ...employee });
       await newEmployee.save();
       return res.status(201).send("USER_REGISTRATION_SUCCESS");
     } catch (error) {

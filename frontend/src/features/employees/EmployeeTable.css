@@ -1,0 +1,15 @@
+th {
+  border: 1px solid var(--primary-color);
+}
+tr {
+  border: 1px solid lightgray;
+}
+thead {
+  background-color: lightgreen;
+}
+td {
+  border: 1px solid lightgray;
+}
+table{
+  padding: 0.5rem;
+}

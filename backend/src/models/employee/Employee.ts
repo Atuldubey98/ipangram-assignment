@@ -8,7 +8,7 @@ import {
 import paginate from "mongoose-paginate-v2";
 const employeeSchema = new Schema(
   {
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "user",
@@ -54,10 +54,11 @@ const employeeSchema = new Schema(
     timestamps: true,
   }
 );
-employeeSchema.plugin(paginate);
 employeeSchema.virtual("name").get(function () {
-  return [this.firstName, this.lastName].filter(Boolean).join(" ");
+  return `${this.firstName} ${this.lastName}`;
 });
+employeeSchema.plugin(paginate);
+
 interface employeeDocument extends Document, IEmployee {}
 const Employee = model<employeeDocument, mongoose.PaginateModel<IEmployee>>(
   "employee",

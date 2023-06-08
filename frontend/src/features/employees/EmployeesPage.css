@@ -1,0 +1,33 @@
+.emp__tableWrapper {
+  overflow: auto;
+  margin: auto;
+  min-height: 60svh;
+}
+.emp__tableBtns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-block: 0.8rem;
+}
+.emp__tableBtns > .emp__tableBtn {
+  flex: 1;
+}
+.emp__tableBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.emp__tableFooter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  padding-block: 0.5rem;
+  max-width: 250px;
+}
+.emp__stats {
+  text-align: center;
+}
+.emp__operations > h3 {
+  text-align: center;
+}
