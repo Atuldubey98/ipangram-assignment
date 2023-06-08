@@ -10,6 +10,13 @@ thead {
 td {
   border: 1px solid lightgray;
 }
-table{
+table {
   padding: 0.5rem;
+}
+.employees__notFound {
+  min-height: 60svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }

@@ -1,11 +1,16 @@
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { loadEmployeesTableAction } from "./employeeSlice";
+import {
+  loadEmployeesTableAction,
+  setRemoveAllEmployeesForUpdate,
+} from "./employeeSlice";
 import { EmpQuery, EmployeeQuery } from "./interfaces";
 
 export default function useEmployeesTable() {
   const appDispatch = useAppDispatch();
-  const { employeesResponse, updateEmployeesIds } = useAppSelector((state) => state.employees);
+  const { employeesResponse, updateEmployeesIds } = useAppSelector(
+    (state) => state.employees
+  );
 
   const [query, setQuery] = useState<EmpQuery>({
     filter: {},
@@ -21,12 +26,14 @@ export default function useEmployeesTable() {
       ...query,
       limit: Number(e.target.value),
     });
+    appDispatch(setRemoveAllEmployeesForUpdate());
   };
   const onPageChange = (increment: boolean) => {
     setQuery({
       ...query,
       page: increment ? query.page + 1 : query.page - 1,
     });
+    appDispatch(setRemoveAllEmployeesForUpdate());
   };
   const defaultQuery: EmployeeQuery = {
     filter: {
@@ -74,6 +81,8 @@ export default function useEmployeesTable() {
     });
   };
   function generateFilters() {
+    appDispatch(setRemoveAllEmployeesForUpdate());
+
     const filter = employeesQuery.filter;
     const queryFilter: { [key: string]: string } = {};
     const querySort: { [key: string]: string } = {};

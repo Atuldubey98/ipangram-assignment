@@ -1,11 +1,20 @@
 import { GrNext, GrPrevious } from "react-icons/gr";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Header from "../common/Header";
 import ManagerContainer from "../common/ManagerContainer";
 import SelectOptions from "../common/SelectOptions";
+import {
+  setEmpCompanyDetailsModalClose,
+  setEmpCompanyDetailsModalOpen,
+  setEmployeeDetailsModalClose,
+  setEmployeeDetailsModalOpen,
+} from "../ui/uiSlice";
+import EmployeeDetailsUpdateModal from "./EmployeeDetailsUpdateModal";
 import EmployeeOperations from "./EmployeeOperations";
 import EmployeeTable from "./EmployeeTable";
 import "./EmployeesPage.css";
 import useEmployeesTable from "./useEmployeesTable";
+import EmployeeCompanyDetails from "./EmployeeCompanyDetails";
 export default function EmployeesPage() {
   const {
     employeesResponse,
@@ -20,12 +29,35 @@ export default function EmployeesPage() {
   } = useEmployeesTable();
   const employees =
     employeesResponse && employeesResponse.docs ? employeesResponse.docs : [];
-
+  const { employeeDetailsModal, employeeCompanyDetails } = useAppSelector(
+    (state) => state.ui
+  );
+  const appDispatch = useAppDispatch();
+  const openEmployeeDetailModal = () => {
+    if (updateEmployeesIds.length === 1) {
+      appDispatch(
+        setEmployeeDetailsModalOpen(
+          employees.filter((emp) => emp._id === updateEmployeesIds[0])[0]
+        )
+      );
+    }
+  };
+  const onCloseEmployeeModal = () => {
+    appDispatch(setEmployeeDetailsModalClose());
+  };
+  const onOpenEmployeeCompanyDetailsModal = () => {
+    appDispatch(setEmpCompanyDetailsModalOpen());
+  };
+  const onCloseEmployeeCompanyDetailsModal = () => {
+    appDispatch(setEmpCompanyDetailsModalClose());
+  };
   return (
     <ManagerContainer>
       <main>
         <Header />
         <EmployeeOperations
+          onOpenEmployeeCompanyDetailsModal={onOpenEmployeeCompanyDetailsModal}
+          openEmployeeDetailModal={openEmployeeDetailModal}
           updateEmployeesIds={updateEmployeesIds}
           generateFilters={generateFilters}
         />
@@ -62,6 +94,18 @@ export default function EmployeesPage() {
           {" Pages"} {", Total Employees :" + employeesResponse?.totalDocs || 0}
         </p>
       </main>
+      {employeeDetailsModal.employee && employeeDetailsModal.isOpen ? (
+        <EmployeeDetailsUpdateModal
+          employee={employeeDetailsModal.employee}
+          onCloseEmployeeModal={onCloseEmployeeModal}
+          isOpen={employeeDetailsModal.isOpen}
+        />
+      ) : null}
+      <EmployeeCompanyDetails
+        updateEmployeesIds={updateEmployeesIds}
+        onCloseEmployeeCompanyDetailsModal={onCloseEmployeeCompanyDetailsModal}
+        isOpen={employeeCompanyDetails.isOpen}
+      />
     </ManagerContainer>
   );
 }

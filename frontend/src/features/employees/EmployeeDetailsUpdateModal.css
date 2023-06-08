@@ -1,0 +1,14 @@
+.employee__details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.emp__detailsForm{
+  display: grid;
+  gap: 0.8rem;
+}
+.emp__detailsFormBtn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

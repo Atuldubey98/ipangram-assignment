@@ -1,5 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { ValidationChain, body, validationResult } from "express-validator";
+import {
+  ValidationChain,
+  body,
+  param,
+  validationResult,
+} from "express-validator";
 
 export const validate = (validations: ValidationChain[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -47,4 +52,8 @@ export const regiserValidation = [
 export const loginValidation = [
   body("email").isEmail(),
   body("password").isString(),
+];
+
+export const employeeValidation = [
+  param("employeeId").isString(),
 ];

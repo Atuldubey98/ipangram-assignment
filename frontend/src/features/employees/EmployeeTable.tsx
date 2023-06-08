@@ -1,14 +1,16 @@
-import { Employee, EmployeeQuery } from "./interfaces";
-import "./EmployeeTable.css";
+import { ChangeEventHandler } from "react";
+import { useAppDispatch } from "../../app/hooks";
 import Input from "../common/Input";
 import SelectOptions from "../common/SelectOptions";
-import { ChangeEventHandler } from "react";
+import "./EmployeeTable.css";
 import EmployeeTableBody from "./EmployeeTableBody";
-import { useAppDispatch } from "../../app/hooks";
+import SelectCategory from "./SelectCategory";
+import SelectDepartment from "./SelectDepartment";
 import {
   setAllEmployeesForUpdate,
   setRemoveAllEmployeesForUpdate,
 } from "./employeeSlice";
+import { Employee, EmployeeQuery } from "./interfaces";
 export type EmployeeTableProps = {
   employees?: Employee[];
   employeesQuery: EmployeeQuery;
@@ -54,25 +56,8 @@ export default function EmployeeTable(props: EmployeeTableProps) {
     },
   ];
 
-  const departMentNames = [
-    { value: "", label: "All" },
-    { value: "google", label: "Google" },
-    { value: "ipangram", label: "Ipangram" },
-    { value: "facebook", label: "Facebook" },
-    { value: "wipro", label: "Wipro" },
-    { value: "wallmart", label: "Wallmart" },
-    { value: "NA", label: "NA" },
-  ];
   const appDispatch = useAppDispatch();
-  const categoryNames = [
-    { value: "", label: "All" },
-    { value: "HR", label: "HR" },
-    { value: "IT", label: "IT" },
-    { value: "sales", label: "Sales" },
-    { value: "product", label: "Product" },
-    { value: "marketting", label: "Marketting" },
-    { value: "NA", label: "NA" },
-  ];
+
   const onAddAllEmployeeForUpdate: ChangeEventHandler<HTMLInputElement> = (
     _
   ) => {
@@ -84,7 +69,7 @@ export default function EmployeeTable(props: EmployeeTableProps) {
       );
     }
   };
-  return employees?.length != 0 ? (
+  return (
     <table className="emp__table">
       <thead>
         <tr className="emp__heading">
@@ -135,20 +120,13 @@ export default function EmployeeTable(props: EmployeeTableProps) {
           </th>
           <th></th>
           <th>
-            <SelectOptions
+            <SelectDepartment
               onChange={onChangeFilter}
-              name="departmentName"
-              options={departMentNames}
               value={departmentName}
             />
           </th>
           <th>
-            <SelectOptions
-              onChange={onChangeFilter}
-              name="categoryName"
-              options={categoryNames}
-              value={categoryName}
-            />
+            <SelectCategory onChange={onChangeFilter} value={categoryName} />
           </th>
           <th>
             <Input
@@ -214,7 +192,9 @@ export default function EmployeeTable(props: EmployeeTableProps) {
           </th>
         </tr>
       </thead>
-      <EmployeeTableBody employees={employees} />
+      {employees?.length !== 0 ? (
+        <EmployeeTableBody employees={employees} />
+      ) : null}
     </table>
-  ) : null;
+  );
 }

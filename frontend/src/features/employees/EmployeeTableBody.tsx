@@ -14,7 +14,6 @@ export default function EmployeeTableBody(props: EmployeeTableBody) {
   const { updateEmployeesIds } = useAppSelector((state) => state.employees);
   function addToUpdateList(_id: string) {
     appDispatch(setAddToUpdateEmployees(_id));
-    console.log(_id);
     
   }
   function removefromUpdateList(_id: string) {
