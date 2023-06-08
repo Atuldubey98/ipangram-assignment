@@ -2,6 +2,7 @@
   border: none;
   outline: none;
   background-color: var(--primary-color);
+  font-size: 1.1rem;
 }
 .addorremove__list {
   background-color: white;
@@ -15,6 +16,7 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 0.8rem;
+  padding-block: 0.8rem;
 }
 
 .add__list > li {

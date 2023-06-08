@@ -24,7 +24,7 @@ export default function RegisterPage() {
     loading,
   } = useRegisterPage();
   console.log(loading);
-  
+
   return (
     <main className="register__page">
       <div className="register__wrapper">
@@ -93,6 +93,7 @@ export default function RegisterPage() {
             inputProps={{
               value: hobby.value,
               onChange: onChangeHobby,
+              placeholder: "Hobby",
             }}
           />
           {loading ? (
