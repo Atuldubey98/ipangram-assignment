@@ -53,7 +53,6 @@ export default function EmployeesPage() {
   const onCloseEmployeeCompanyDetailsModal = () => {
     appDispatch(setEmpCompanyDetailsModalClose());
   };
-  console.log(loading);
   
   return (
     <ManagerContainer>

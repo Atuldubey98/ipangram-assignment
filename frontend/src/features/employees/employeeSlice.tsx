@@ -38,7 +38,6 @@ const employeeSlice = createSlice({
     },
     setEmployeesLoading: (state) => {
       state.employeesLoadingStatus = "loading";
-      console.log("Loading");
     },
     setEmployeesSucces: (state, action: PayloadAction<EmployeesResponse>) => {
       state.employeesResponse = action.payload;

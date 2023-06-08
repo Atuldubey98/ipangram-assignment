@@ -1,5 +1,4 @@
 export default function getFromAPICodes(code: string) {
-  console.log(code);
 
   const apicodes: { [type: string]: string } = {
     USER_PAYLOAD_ERROR: "User credentials were incorrect",

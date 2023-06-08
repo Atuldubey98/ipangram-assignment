@@ -23,7 +23,6 @@ export default function RegisterPage() {
     hobby,
     loading,
   } = useRegisterPage();
-  console.log(loading);
 
   return (
     <main className="register__page">
